@@ -1,0 +1,59 @@
+# ============================================================================
+# Nestarr - Local self-built image (runs THIS fork instead of the upstream image)
+# ============================================================================
+# The upstream `neuman1812/nestarr` image is rebuilt from tokendad/Nestarr, so it
+# does NOT contain changes made on this fork. This file builds the image from
+# the current source tree, including your custom UI changes.
+#
+# Usage:
+#   cp .env.example .env            # then edit secrets (SECRET_KEY, JWT_SECRET_KEY, ...)
+#   docker compose -f docker-compose.local.yml up -d --build
+#
+# App is served at http://<host>:8181 (override with APP_PORT in .env).
+#
+# Raspberry-Pi / hardware features (Bluetooth asset tracking, CUPS printing)
+# require host networking and extra device mounts. Uncomment the block below if
+# you rely on them; most home-inventory setups do not.
+# ============================================================================
+services:
+  nestarr:
+    build:
+      context: .
+      args:
+        PUID: "${PUID:-1000}"
+        PGID: "${PGID:-1000}"
+    image: trucnguyenmax/nestarr:local
+    container_name: nestarr
+    restart: unless-stopped
+
+    # --- Hardware / printer access (optional) -------------------------------
+    # network_mode: host
+    # privileged: true
+    # volumes:
+    #   - /dev:/dev
+    #   - /run/dbus:/run/dbus
+    #   - /var/run/cups/cups.sock:/var/run/cups/cups.sock
+    # ------------------------------------------------------------------------
+
+    ports:
+      - "${APP_PORT:-8181}:8181"
+
+    env_file:
+      - .env
+
+    environment:
+      PUID: "${PUID:-1000}"
+      PGID: "${PGID:-1000}"
+      TZ: "${TZ:-Etc/UTC}"
+      APP_PORT: 8181
+
+    volumes:
+      - ./data:/app/data
+      - /etc/localtime:/etc/localtime:ro
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8181/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
