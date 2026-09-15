@@ -11,6 +11,7 @@ export const STORAGE_KEYS = {
   THEME: "Nestarr_theme",
   LOCALE_CONFIG: "Nestarr_locale_config",
   ITEM_COLUMNS: "Nestarr_itemColumns",
+  ITEM_LIMIT: "Nestarr_itemLimit",
   CUSTOM_FIELDS_TEMPLATE: "Nestarr_CustomFieldsTemplate",
   PRINT_PREFERENCES: "nestarr_print_preferences",
 } as const;
@@ -21,6 +22,7 @@ const LEGACY_STORAGE_KEYS = {
   THEME: "NesVentory_theme",
   LOCALE_CONFIG: "NesVentory_locale_config",
   ITEM_COLUMNS: "NesVentory_itemColumns",
+  ITEM_LIMIT: "NesVentory_itemLimit",
   CUSTOM_FIELDS_TEMPLATE: "NesVentory_CustomFieldsTemplate",
   PRINT_PREFERENCES: "nesventory_print_preferences",
 } as const;
@@ -31,6 +33,7 @@ const STORAGE_KEY_MIGRATIONS = [
   [LEGACY_STORAGE_KEYS.THEME, STORAGE_KEYS.THEME],
   [LEGACY_STORAGE_KEYS.LOCALE_CONFIG, STORAGE_KEYS.LOCALE_CONFIG],
   [LEGACY_STORAGE_KEYS.ITEM_COLUMNS, STORAGE_KEYS.ITEM_COLUMNS],
+  [LEGACY_STORAGE_KEYS.ITEM_LIMIT, STORAGE_KEYS.ITEM_LIMIT],
   [LEGACY_STORAGE_KEYS.CUSTOM_FIELDS_TEMPLATE, STORAGE_KEYS.CUSTOM_FIELDS_TEMPLATE],
   [LEGACY_STORAGE_KEYS.PRINT_PREFERENCES, STORAGE_KEYS.PRINT_PREFERENCES],
 ] as const;

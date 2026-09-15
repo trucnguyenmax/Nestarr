@@ -392,7 +392,7 @@ hr {
   border-radius: 0.75rem;
   border: 1px solid var(--border-panel);
   overflow: auto;
-  max-height: 420px;
+  max-height: 70vh;
 }
 
 table {
@@ -439,6 +439,19 @@ tbody tr:hover {
 .items-table.compact th,
 .items-table.compact td {
   padding-block: 0.35rem;
+}
+
+.items-table {
+  font-size: 0.9rem;
+}
+
+.items-table th,
+.items-table td {
+  padding: 0.55rem 0.7rem;
+}
+
+.items-table th {
+  font-size: 0.8rem;
 }
 
 .empty-row {

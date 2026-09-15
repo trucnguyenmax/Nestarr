@@ -91,7 +91,11 @@ const InventoryPage: React.FC<InventoryPageProps> = ({
   initialLocationId,
 }) => {
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
-  const [itemLimit, setItemLimit] = useState<number>(10);
+  const [itemLimit, setItemLimit] = useState<number>(() => {
+    const saved = localStorage.getItem(STORAGE_KEYS.ITEM_LIMIT);
+    const parsed = saved !== null ? Number(saved) : NaN;
+    return Number.isNaN(parsed) ? 50 : parsed;
+  });
   const [locationCategories, setLocationCategories] = useState<string[]>([
     "Primary",
     "Out-building",
@@ -806,7 +810,11 @@ const InventoryPage: React.FC<InventoryPageProps> = ({
               Show:
               <select
                 value={itemLimit}
-                onChange={(e) => setItemLimit(Number(e.target.value))}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  setItemLimit(value);
+                  localStorage.setItem(STORAGE_KEYS.ITEM_LIMIT, value.toString());
+                }}
                 style={{ padding: "0.25rem 0.5rem" }}
               >
                 <option value={10}>10</option>
