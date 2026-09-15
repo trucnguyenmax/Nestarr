@@ -53,6 +53,21 @@ git pull
 docker compose -f docker-compose.local.yml up -d --build
 ```
 
+### Updating a private fork from upstream
+
+A private fork loses GitHub's "Sync fork" button. This fork's clone keeps two
+remotes for that reason (`origin` points at `tokendad/Nestarr`, `fork` at your
+private repo). To pull the latest upstream changes:
+
+```bash
+git fetch origin
+git merge origin/main
+git push fork main
+docker compose -f docker-compose.local.yml up -d --build
+```
+
+Resolve any merge conflicts, then push again.
+
 ## Notes
 
 - The frontend is built inside the image (`Dockerfile`), so UI changes from
